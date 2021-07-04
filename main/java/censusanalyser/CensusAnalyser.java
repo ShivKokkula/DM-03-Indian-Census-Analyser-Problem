@@ -14,9 +14,7 @@ public class CensusAnalyser {
     public int loadStateCensusData(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
             Iterator<StateCensusCSV> censusCSVIterator = this.getCSVFileIterator(reader,StateCensusCSV.class);
-            Iterable<StateCensusCSV> csvIterable = () -> censusCSVIterator;
-            int numOfEnteries = (int) StreamSupport.stream(csvIterable.spliterator(),false).count();
-            return numOfEnteries;
+            return getCount(censusCSVIterator);
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
@@ -29,9 +27,7 @@ public class CensusAnalyser {
     public int loadIndianStateCode(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
             Iterator<IndianStateCodeCSV> stateCodeCSVIterator = this.getCSVFileIterator(reader,IndianStateCodeCSV.class);
-            Iterable<IndianStateCodeCSV> csvIterable = () -> stateCodeCSVIterator;
-            int numOfEnteries = (int) StreamSupport.stream(csvIterable.spliterator(),false).count();
-            return numOfEnteries;
+            return this.getCount(stateCodeCSVIterator);
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
@@ -39,6 +35,12 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE);
         }
+    }
+
+    private<E> int getCount(Iterator<E> iterator){
+        Iterable<E> csvIterable = () -> iterator;
+        int numOfEnteries = (int) StreamSupport.stream(csvIterable.spliterator(),false).count();
+        return numOfEnteries;
     }
 
     private <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) throws CensusAnalyserException {
