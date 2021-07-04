@@ -15,7 +15,7 @@ public class CensusAnalyserTest {
     @Test
     public void givenStateCensusCSVFileReturnsCorrectRecords() {
         try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
             Assert.assertEquals(29, numOfRecords);
         } catch (CensusAnalyserException e) {
@@ -25,7 +25,7 @@ public class CensusAnalyserTest {
     @Test
     public void givenStateCensusData_WithWrongFile_ShouldThrowException() {
         try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(CensusAnalyserException.class);
             censusAnalyser.loadStateCensusData(WRONG_CSV_FILE_PATH);
@@ -37,7 +37,7 @@ public class CensusAnalyserTest {
     @Test
     public void givenStateCensusData_WhenTyeIncorrect_ShouldThrowException() {
         try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(CensusAnalyserException.class);
             censusAnalyser.loadStateCensusData(WRONG_TYPE_FILE_PATH);
@@ -49,7 +49,7 @@ public class CensusAnalyserTest {
     @Test
     public void givenStateCensusData_WithIncorrectDelimiter_ShouldThrowException() {
         try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(CensusAnalyserException.class);
             censusAnalyser.loadStateCensusData(WRONG_TYPE_DELIMETER_FILE_PATH);
@@ -61,7 +61,7 @@ public class CensusAnalyserTest {
     @Test
     public void givenIndianStateCSV_ShouldReturnExactCount(){
         try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadIndianStateCode(INDIA_STATE_CSV_FILE_PATH);
             Assert.assertEquals(37,numOfRecords);
         } catch (CensusAnalyserException e) {
